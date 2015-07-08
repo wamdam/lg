@@ -3,4 +3,4 @@
 HERE="$( dirname "$( readlink -f "$0" )" )"
 PYTHON=$HERE/env/bin/python
 
-exec $PYTHON $HERE/lg.py
+exec $PYTHON $HERE/lg.py "$@"

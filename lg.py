@@ -34,7 +34,7 @@ if __name__ == '__main__':
             if days:
                 timediff = '+{} days'.format(days)
             else:
-                timediff = '+{0:02d}:{0:02d}'.format(hours, minutes)
+                timediff = '+{:02d}:{:02d}'.format(hours, minutes)
     except FileNotFoundError:
         timediff = ''
 
