@@ -10,7 +10,7 @@ Usage:
 
 Features:
     lg <category>: Some text   -- creates an extra sum for this category
-                                (<= 9 characters)
+                                  (<= 9 characters)
     lg "Some text **"          -- Logs this time as slacking
 """
 
@@ -114,6 +114,11 @@ def show(lines):
 
 
 if __name__ == '__main__':
+    # ensure the file exists
+    if not os.path.exists(filename):
+        with open(filename, 'w') as f:
+            pass
+
     msg = " ".join(sys.argv[1:])
     now = datetime.datetime.now(pytz.timezone('Europe/Berlin'))
 
