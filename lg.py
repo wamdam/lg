@@ -7,6 +7,11 @@ Usage:
     lg -a
     lg -h
     lg <message>
+
+Features:
+    lg <category>: Some text   -- creates an extra sum for this category
+                                (<= 9 characters)
+    lg "Some text **"          -- Logs this time as slacking
 """
 
 from collections import Counter
