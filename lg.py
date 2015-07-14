@@ -5,6 +5,7 @@
 Usage:
     lg
     lg -a
+    lg -h
     lg <message>
 """
 
@@ -120,6 +121,8 @@ if __name__ == '__main__':
                     lines.append(line)
             print('\n'.join(show(lines)))
 
+    elif msg == '-h':
+        print(__doc__)
     elif msg == '-a':
         lines = []
         last_day = None
