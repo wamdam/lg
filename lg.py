@@ -8,6 +8,7 @@ Usage:
     lg <message>
 """
 
+from collections import Counter
 import sys
 import datetime
 import dateutil.parser
@@ -56,6 +57,7 @@ def show(lines):
     last = None
     sum_minutes = 0.0
     sum_minutes_slack = 0.0
+    sum_minutes_category = Counter()
     for line in lines:
         cur, msg = read_line(line)
         if not last:
@@ -63,17 +65,39 @@ def show(lines):
             ret.append(cur.date().strftime('%Y-%m-%d'))
             ret.append('='*78)
         days, hours, minutes, seconds = calc_diff(last, cur)
+        _spent = 1440*days + 60*hours + minutes + seconds/60
         if '**' in msg:
-            sum_minutes_slack += 1440*days + 60*hours + minutes + seconds/60
+            sum_minutes_slack += _spent
         else:
-            sum_minutes += 1440*days + 60*hours + minutes + seconds/60
+            sum_minutes += _spent
+            if ':' in msg:
+                category, _ = msg.split(':', 1)
+                # sanity check
+                if len(category) < 9:
+                    sum_minutes_category[category] += _spent
         ret.append(format(cur, days, hours, minutes, msg))
         last = cur
 
+    if sum_minutes_category:
+        ret.append('          ------')
+        for category, spent in sum_minutes_category.items():
+            ret.append('{:>9}: {:02d}:{:02d}'.format(
+                category,
+                int(spent)//60, round(spent)%60,
+            ))
+        _other = sum_minutes - sum(sum_minutes_category.values())
+        ret.append('{:>9}: {:02d}:{:02d}'.format(
+            '_other',
+            int(_other)//60, round(_other)%60,
+        ))
     ret.append('          ------')
-    ret.append('           {:02d}:{:02d} (+{:02d}:{:02d} slacking)'.format(
+    ret.append('{:>9}: {:02d}:{:02d}'.format(
+        'slacking',
+        int(sum_minutes_slack)//60, round(sum_minutes_slack)%60,
+    ))
+    ret.append('{:>9}: {:02d}:{:02d}'.format(
+        'work',
         int(sum_minutes)//60, round(sum_minutes)%60,
-        int(sum_minutes_slack)//60, round(sum_minutes_slack)%60
     ))
     ret.append('')
     sum_minutes = 0.0
