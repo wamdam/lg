@@ -68,8 +68,10 @@ def show(lines):
         cur, msg = read_line(line)
         if not last:
             last = cur
+            ret.append('='*78)
             ret.append(cur.date().strftime('%Y-%m-%d'))
             ret.append('='*78)
+            ret.append('')
         days, hours, minutes, seconds = calc_diff(last, cur)
         _spent = 1440*days + 60*hours + minutes + seconds/60
         if '**' in msg:
@@ -98,12 +100,12 @@ def show(lines):
         ))
     ret.append('          ------')
     ret.append('{:>9}: {:02d}:{:02d}'.format(
-        'slacking',
-        int(sum_minutes_slack)//60, round(sum_minutes_slack)%60,
-    ))
-    ret.append('{:>9}: {:02d}:{:02d}'.format(
         'work',
         int(sum_minutes)//60, round(sum_minutes)%60,
+    ))
+    ret.append('{:>9}: {:02d}:{:02d}'.format(
+        'slacking',
+        int(sum_minutes_slack)//60, round(sum_minutes_slack)%60,
     ))
     ret.append('')
     sum_minutes = 0.0
