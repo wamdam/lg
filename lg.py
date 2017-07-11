@@ -81,7 +81,7 @@ def show(lines):
             if ':' in msg:
                 category, _ = msg.split(':', 1)
                 # sanity check
-                if len(category) < 9:
+                if len(category) < 19:
                     sum_minutes_category[category] += _spent
         ret.append(format(cur, days, hours, minutes, msg))
         last = cur
