@@ -29,4 +29,12 @@ Showing what has been logged::
             ------
        work: 02:20
    slacking: 00:10
+
+Installation:
+
+# python3 -mvenv env
+# env/bin/pip install -r requirements.txt
+# cd ~/bin
+# ln -s …path_to_lg/lg
+
   
