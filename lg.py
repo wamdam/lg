@@ -85,6 +85,11 @@ def show(lines):
                     sum_minutes_category[category] += _spent
         ret.append(format(cur, days, hours, minutes, msg))
         last = cur
+    # Show unbooked time for today
+    now = datetime.datetime.now(pytz.timezone('Europe/Berlin'))
+    if cur.date() == now.date():
+        days, hours, minutes, seconds = calc_diff(last, now)
+        ret.append(format(now, days, hours, minutes, '<unbooked>'))
 
     if sum_minutes_category:
         ret.append('          ------')
