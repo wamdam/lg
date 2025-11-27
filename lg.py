@@ -89,7 +89,8 @@ def show(lines):
     now = datetime.datetime.now(pytz.timezone('Europe/Berlin'))
     if cur.date() == now.date():
         days, hours, minutes, seconds = calc_diff(last, now)
-        ret.append(format(now, days, hours, minutes, '<unbooked>'))
+        if days + hours + minutes > 0:
+            ret.append(format(now, days, hours, minutes, '<unbooked>'))
 
     if sum_minutes_category:
         ret.append('          ------')
