@@ -64,6 +64,7 @@ def show(lines):
     sum_minutes = 0.0
     sum_minutes_slack = 0.0
     sum_minutes_category = Counter()
+    cur = None
     for line in lines:
         cur, msg = read_line(line)
         if not last:
@@ -87,7 +88,7 @@ def show(lines):
         last = cur
     # Show unbooked time for today
     now = datetime.datetime.now(pytz.timezone('Europe/Berlin'))
-    if cur.date() == now.date():
+    if cur and cur.date() == now.date():
         days, hours, minutes, seconds = calc_diff(last, now)
         if days + hours + minutes > 0:
             ret.append(format(now, days, hours, minutes, '<unbooked>'))
